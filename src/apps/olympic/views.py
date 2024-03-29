@@ -21,12 +21,33 @@ def register(request):
                 last_name = form.cleaned_data['last_name'],
                 username = form.cleaned_data['username'],
                 email = form.cleaned_data['email'],
-                password = form.cleaned_data['password']
+                country = form.cleaned_data['country'],
+                fav_sport = form.cleaned_data['fav_sport'],
+                password = form.cleaned_data['password'],
             )
             return redirect('/admin/login')
     else:
         form = RegisterForm()
     return render(request,'registration/register.html',{'form':form})
+
+
+def forgotpassword(request):
+    if request.method=='POST':
+        email = request.POST['email']
+        password = request.POST['password']
+
+        try:
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            return render(request,'registration/forgot.html',{'error':'User with this username does not exists'})
+            
+        user.set_password(password)
+        user.save()
+            
+        return redirect('/admin/login')
+    
+    else:
+        return render(request,'registration/forgot.html')
 
 
 def logout_view(request):

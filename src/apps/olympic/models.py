@@ -2,6 +2,15 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 
+class CountryChoices(models.TextChoices):
+    NEPAL = 'nepal','Nepal'
+    INDIA = 'india','India'
+    CHINA = 'china','China'
+    AMERICA = 'america','America'
+    AUSTRALIA = 'australia','Australia'
+    CANADA = 'canada','Canada'
+
+
 # Create your models here.
 class Sport(models.Model):
 
@@ -50,6 +59,15 @@ class User(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     username = models.CharField(max_length=255,unique=True)
+    country = models.CharField(
+        max_length=255,
+        null=False,
+        blank=False,
+        choices=CountryChoices.choices,
+        default=CountryChoices.NEPAL
+    )
+
+    fav_sport = models.CharField(max_length=255,null=True)
 
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)

@@ -10,5 +10,7 @@ class RegisterForm(forms.ModelForm):
             'last_name',
             'username',
             'email',
+            'country',
+            'fav_sport',
             'password',
         ]

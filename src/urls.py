@@ -8,6 +8,10 @@ from django.conf import settings
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.models import User
 
+admin.site.site_header = "Custom Name"
+admin.site.site_title = "Cusom title"
+admin.site.index_title = "Welcome Name"
+
 class CustomAdminLoginView(LoginView):
     def form_valid(self, form: AuthenticationForm) -> HttpResponseRedirect:
         username = form.data.get('username')
